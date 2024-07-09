@@ -37,8 +37,7 @@ public class DrugCategoryController extends BaseController
     private IDrugCategoryService drugCategoryService;
 
     /**
-     * 查询药品分类
-列表
+     * 查询药品分类列表
      */
     @PreAuthorize("@ss.hasPermi('system:drug:list')")
     @GetMapping("/list")
@@ -50,8 +49,7 @@ public class DrugCategoryController extends BaseController
     }
 
     /**
-     * 导出药品分类
-列表
+     * 导出药品分类列表
      */
     @PreAuthorize("@ss.hasPermi('system:drug:export')")
     @Log(title = "药品分类 ", businessType = BusinessType.EXPORT)
@@ -64,8 +62,7 @@ public class DrugCategoryController extends BaseController
     }
 
     /**
-     * 获取药品分类
-详细信息
+     * 获取药品分类详细信息
      */
     @PreAuthorize("@ss.hasPermi('system:drug:query')")
     @GetMapping(value = "/{id}")
