@@ -9,14 +9,14 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="父类id" prop="parentId">
+      <!-- <el-form-item label="父类id" prop="parentId">
         <el-input
           v-model="queryParams.parentId"
           placeholder="请输入父类id"
           clearable
           @keyup.enter.native="handleQuery"
         />
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -73,8 +73,7 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="序号" align="center" prop="id" />
       <el-table-column label="药品名称" align="center" prop="drugName" />
-      <el-table-column label="父类id
-" align="center" prop="parentId" />
+      <!-- <el-table-column label="父类id" align="center" prop="parentId" /> -->
       <el-table-column label="备注" align="center" prop="remark" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">

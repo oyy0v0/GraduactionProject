@@ -100,7 +100,8 @@ export const dynamicRoutes = [
     children: [
       {
         path: 'role/:userId(\\d+)',
-        component: () => import('@/views/system/user/authRole'),
+        //component: () => import('@/views/system/user/authRole'),
+        component: (resolve) => require(['@/views/system/user/authRole'],resolve),
         name: 'AuthRole',
         meta: { title: '分配角色', activeMenu: '/system/user' }
       }
