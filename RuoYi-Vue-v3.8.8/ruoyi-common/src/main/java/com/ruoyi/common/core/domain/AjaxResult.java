@@ -99,6 +99,7 @@ public class AjaxResult extends HashMap<String, Object>
      */
     public static AjaxResult success(String msg, Object data)
     {
+        //一层传输一个数据，然后这是统一返回给前端的模型
         return new AjaxResult(HttpStatus.SUCCESS, msg, data);
     }
 

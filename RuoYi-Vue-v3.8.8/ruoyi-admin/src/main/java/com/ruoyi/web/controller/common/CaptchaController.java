@@ -46,7 +46,9 @@ public class CaptchaController
     public AjaxResult getCode(HttpServletResponse response) throws IOException
     {
         AjaxResult ajax = AjaxResult.success();
+        //获取验证码开关
         boolean captchaEnabled = configService.selectCaptchaEnabled();
+
         ajax.put("captchaEnabled", captchaEnabled);
         if (!captchaEnabled)
         {
@@ -54,6 +56,7 @@ public class CaptchaController
         }
 
         // 保存验证码信息
+        //uuid就是redis验证码的key值
         String uuid = IdUtils.simpleUUID();
         String verifyKey = CacheConstants.CAPTCHA_CODE_KEY + uuid;
 
@@ -80,6 +83,7 @@ public class CaptchaController
         FastByteArrayOutputStream os = new FastByteArrayOutputStream();
         try
         {
+            //把数据流写成一张图片
             ImageIO.write(image, "jpg", os);
         }
         catch (IOException e)
@@ -87,6 +91,7 @@ public class CaptchaController
             return AjaxResult.error(e.getMessage());
         }
 
+        //把图片和uuid放回到ajax然后设置图片设置uuid
         ajax.put("uuid", uuid);
         ajax.put("img", Base64.encode(os.toByteArray()));
         return ajax;

@@ -93,6 +93,7 @@ public class SysLoginService
         {
             AuthenticationContextHolder.clearContext();
         }
+        //记录了日志，这个是登录的操作这个是记录用户的登录信息，之前记录的是登录操作信息
         AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         recordLoginInfo(loginUser.getUserId());
@@ -111,16 +112,20 @@ public class SysLoginService
     public void validateCaptcha(String username, String code, String uuid)
     {
         boolean captchaEnabled = configService.selectCaptchaEnabled();
+        //验证码开关
         if (captchaEnabled)
         {
             String verifyKey = CacheConstants.CAPTCHA_CODE_KEY + StringUtils.nvl(uuid, "");
             String captcha = redisCache.getCacheObject(verifyKey);
+            //如果过期了
             if (captcha == null)
             {
+                //跟线程相关的写法：异步写日志，异步的任务管理器，用的是线程池，日志就是验证码失效，这样的好处就是解耦合，放回异常的同时，同时记录日志
                 AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.expire")));
                 throw new CaptchaExpireException();
             }
             redisCache.deleteObject(verifyKey);
+            //如果验证码错误
             if (!code.equalsIgnoreCase(captcha))
             {
                 AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.error")));
