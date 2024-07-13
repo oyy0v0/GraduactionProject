@@ -10,20 +10,40 @@
         />
       </el-form-item>
       <el-form-item label="药品分类" prop="drugId">
-        <el-input
+        <!-- <el-input
           v-model="queryParams.drugId"
           placeholder="请输入药品分类ID"
           clearable
           @keyup.enter.native="handleQuery"
-        />
+        /> -->
+        <el-select v-model="queryParams.drugId" placeholder="请选择药品分类"
+          clearable
+          @keyup.enter.native="handleQuery">
+          <el-option
+            v-for="item in options"
+            :key="item.id"
+            :label="item.drugName"
+            :value="item.id">
+          </el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="是否过期" prop="overdue">
-        <el-input
+        <!-- <el-input
           v-model="queryParams.overdue"
           placeholder="请输入是否过期"
           clearable
           @keyup.enter.native="handleQuery"
-        />
+        /> -->
+        <el-select v-model="queryParams.overdue"
+          clearable
+          @keyup.enter.native="handleQuery" placeholder="请选择是否过期">
+          <el-option
+            v-for="item in overdue_list"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
