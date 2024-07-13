@@ -36,6 +36,11 @@ public class DrugCategoryController extends BaseController
     @Autowired
     private IDrugCategoryService drugCategoryService;
 
+    @PostMapping(value = "listAll")
+    public AjaxResult listAll(){
+        List<DrugCategory> datalist = drugCategoryService.selectDrugCategoryList(null);
+        return AjaxResult.success(datalist);
+    }
     /**
      * 查询药品分类列表
      */

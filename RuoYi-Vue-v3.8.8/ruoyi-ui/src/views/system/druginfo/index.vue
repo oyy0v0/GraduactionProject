@@ -123,8 +123,16 @@
         <el-form-item label="药品名称" prop="drugName">
           <el-input v-model="form.drugName" placeholder="请输入药品名称"/>
         </el-form-item>
-        <el-form-item label="药品分类ID" prop="drugId">
-          <el-input v-model="form.drugId" placeholder="请输入药品分类ID"/>
+        <el-form-item label="药品分类" prop="drugId">
+          <!-- <el-input v-model="form.drugId" placeholder="请输入药品分类ID"/> -->
+          <el-select v-model="form.drugId" placeholder="请选择药品分类">
+            <el-option
+              v-for="item in options"
+              :key="item.id"
+              :label="item.drugName"
+              :value="item.id">
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="是否过期" prop="overdue">
           <!-- <el-input v-model="form.overdue" placeholder="请输入是否过期"/> -->
@@ -148,22 +156,25 @@
 
 <script>
 import {listDruginfo, getDruginfo, delDruginfo, addDruginfo, updateDruginfo} from "@/api/system/druginfo";
+import { listAllDrug} from "@/api/system/drug";
 
 export default {
   name: "Druginfo",
   data() {
     return {
+      //物资分类列表
+      options:[],
       //磨损程度列表
       overdue_list : [
         {
           value: 0,
-          label: 全新
+          label: "全新"
         },{
           value: 1,
-          label: 快过期
+          label: "快过期"
         },{
           value: 2,
-          label: 过期
+          label: "过期"
         }
       ],
       // 遮罩层
@@ -200,8 +211,15 @@ export default {
   },
   created() {
     this.getList();
+    this.getDrugList();
   },
   methods: {
+    //获取所有的物资分类信息
+    getDrugList(){
+      listAllDrug().then(response =>{
+        this.options = response.data;
+      })
+    },
     /** 查询药品基本信息列表 */
     getList() {
       this.loading = true;

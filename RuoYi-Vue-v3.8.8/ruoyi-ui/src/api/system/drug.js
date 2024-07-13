@@ -1,5 +1,14 @@
 import request from '@/utils/request'
 
+// 查询所有药品分类
+
+export function listAllDrug() {
+  return request({
+    url: '/system/drug/listAll',
+    method: 'post',
+  })
+}
+
 // 查询药品分类
 //列表
 export function listDrug(query) {
