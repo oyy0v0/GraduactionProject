@@ -127,7 +127,15 @@
           <el-input v-model="form.drugId" placeholder="请输入药品分类ID"/>
         </el-form-item>
         <el-form-item label="是否过期" prop="overdue">
-          <el-input v-model="form.overdue" placeholder="请输入是否过期"/>
+          <!-- <el-input v-model="form.overdue" placeholder="请输入是否过期"/> -->
+          <el-select v-model="form.overdue" placeholder="请选择">
+            <el-option
+              v-for="item in overdue_list"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -145,6 +153,19 @@ export default {
   name: "Druginfo",
   data() {
     return {
+      //磨损程度列表
+      overdue_list : [
+        {
+          value: 0,
+          label: 全新
+        },{
+          value: 1,
+          label: 快过期
+        },{
+          value: 2,
+          label: 过期
+        }
+      ],
       // 遮罩层
       loading: true,
       // 选中数组
