@@ -1,10 +1,13 @@
 package com.ruoyi.web.controller.oyy0v0.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.web.controller.oyy0v0.domain.DrugCategory;
 import com.ruoyi.web.controller.oyy0v0.domain.DrugInfo;
+import com.ruoyi.web.controller.oyy0v0.service.IDrugCategoryService;
 import com.ruoyi.web.controller.oyy0v0.service.IDrugInfoService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +37,8 @@ import com.ruoyi.common.core.page.TableDataInfo;
 public class DrugInfoController extends BaseController {
     @Autowired
     private IDrugInfoService drugInfoService;
-
+    @Autowired
+    private IDrugCategoryService drugCategoryService;
     /**
      * 查询药品基本信息列表
      */
@@ -43,6 +47,16 @@ public class DrugInfoController extends BaseController {
     public TableDataInfo list(DrugInfo drugInfo) {
         startPage();
         List<DrugInfo> list = drugInfoService.selectDrugInfoList(drugInfo);
+        if(list != null && list.size() > 0){
+            list = list.stream().peek(item -> {
+                Long drugId = item.getDrugId();
+                DrugCategory drugCategory = drugCategoryService.selectDrugCategoryById(drugId);
+                if(drugCategory != null){
+                    item.setcategoryName(drugCategory.getDrugName());
+                }
+
+            }).collect(Collectors.toList());
+        }
         return getDataTable(list);
     }
 

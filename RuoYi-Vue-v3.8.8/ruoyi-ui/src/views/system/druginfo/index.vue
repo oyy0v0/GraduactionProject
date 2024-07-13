@@ -105,13 +105,16 @@
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="序号" align="center" prop="id"/>
       <el-table-column label="药品名称" align="center" prop="drugName"/>
-      <el-table-column label="药品分类" align="center" prop="drugId"/>
+      <el-table-column label="药品分类" align="center" prop="categoryName"/>
       <el-table-column label="是否过期" align="center" prop="overdue">
+      
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.overdue==0?"全新":scope.row.overdue==1?"快过期":"过期了" }}</span>
         </template>
         
       </el-table-column>
+      <el-table-column label="创建时间" align="center" prop="createTime"/>
+      <el-table-column label="更新时间" align="center" prop="updateTime"/>
 
       
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">

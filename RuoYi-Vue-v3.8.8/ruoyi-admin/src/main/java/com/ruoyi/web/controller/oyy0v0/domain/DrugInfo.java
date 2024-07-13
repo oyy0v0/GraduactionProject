@@ -32,6 +32,11 @@ public class DrugInfo extends BaseEntity {
     private Long drugId;
 
     /**
+     * 分类名称字段（非数据库字段）
+     */
+    private String categoryName;
+
+    /**
      * 是否过期（0全新，1快过期，2已经过期）
      */
     @Excel(name = "是否过期", readConverterExp = "0=全新，1快过期，2已经过期")
@@ -45,6 +50,13 @@ public class DrugInfo extends BaseEntity {
         return id;
     }
 
+    public void setcategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public String getcategoryName() {
+        return categoryName;
+    }
     public void setDrugName(String drugName) {
         this.drugName = drugName;
     }
